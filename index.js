@@ -89,7 +89,6 @@ function sendMessage(text) {
             console.error(json.description)
         })
         .then(result => {
-            console.info(result)
         })
         .catch(exception => {
             console.error(exception.stack)
