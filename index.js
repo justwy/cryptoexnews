@@ -20,8 +20,6 @@ cron.schedule('*/5 * * * *', async function(){
     var messages = tickerInfo.map(info => {
 
         info = JSON.parse(info)[0];
-        console.log(info);
-
 
         return `*${info.symbol}\t\$${info.price_usd}*\t1h ${info.percent_change_1h}%\tmkt-cap ${info.market_cap_usd}`;
     })
