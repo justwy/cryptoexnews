@@ -1,8 +1,9 @@
 const TOKEN = process.env.TOKEN
  
 const BotFather = require('botfather')
-const request = require('request')
 const bf = new BotFather(TOKEN)
+
+const request = require('request');
 
 var cron = require('node-cron');
 
@@ -11,8 +12,14 @@ const TOTAL_SENT_TIME = 6;
 
 var newList = '';
 var sendTime = 0;
- 
-cron.schedule('*/10 * * * * *', function(){
+
+
+cron.schedule('*/10 * * * * *', async function(){
+    var info = await getTicker('enigma-project');
+    info = JSON.parse(info);
+
+    var message = 'ticker: ' + info[0].symbol + ', price: ' + info[0].price_usd;
+
     getNewList((err, list) => {
         if (err) return console.error(err);
 
@@ -22,12 +29,23 @@ cron.schedule('*/10 * * * * *', function(){
         }
 
         if (sendTime > 0) {
-            sendMessage(newList);
+            console.log(message);
+            sendMessage(newList + '\n' + message);
             sendTime--;
         }
     });
 
 });
+
+function getTicker(id) {
+    return new Promise((resolve, reject) => {
+        request.get("https://api.coinmarketcap.com/v1/ticker/" + id, (err, resp, body) => {
+            if (err != null) return reject(err);
+
+            return resolve(body);
+        })
+    })
+}
 
 function getNewList(cb) {
     binanceCrawler((err, xml) => {
