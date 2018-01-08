@@ -10,16 +10,26 @@ var cron = require('node-cron');
 // number of times to send when new token is released.
 const TOTAL_SENT_TIME = 6;
 
+const TICKERS = ['enigma-project', 'bounty0x', 'ethlend'];
+
 var newList = '';
 var sendTime = 0;
 
+cron.schedule('*/5 * * * *', async function(){
+    var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))
+    var messages = tickerInfo.map(info => {
+
+        info = JSON.parse(info)[0];
+        console.log(info);
+
+
+        return `*${info.symbol}\t\$${info.price_usd}*\t1h ${info.percent_change_1h}%\tmkt-cap ${info.market_cap_usd}`;
+    })
+
+    sendMessage(messages.join('\n'));
+});
 
 cron.schedule('*/10 * * * * *', async function(){
-    var info = await getTicker('enigma-project');
-    info = JSON.parse(info);
-
-    var message = 'ticker: ' + info[0].symbol + ', price: ' + info[0].price_usd;
-
     getNewList((err, list) => {
         if (err) return console.error(err);
 
@@ -29,8 +39,7 @@ cron.schedule('*/10 * * * * *', async function(){
         }
 
         if (sendTime > 0) {
-            console.log(message);
-            sendMessage(newList + '\n' + message);
+            sendMessage(newList);
             sendTime--;
         }
     });
