@@ -5,7 +5,7 @@ const bf = new BotFather(TOKEN)
 
 const request = require('request');
 
-const busBot = require('./telegrambot')
+const telegramBot = require('./telegrambot')
 
 var cron = require('node-cron');
 
@@ -17,7 +17,7 @@ const TICKERS = ['enigma-project', 'bounty0x', 'stellar', 'ripple', 'appcoins'];
 var newList = '';
 var sendTime = 0;
 
-busBot.runBusBot();
+telegramBot.runBot();
 
 cron.schedule('*/5 * * * *', async function(){
     var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))

@@ -21,7 +21,7 @@ const zoom = {
 }
 
 // return a promise of stream
-function getBusStatus() {
+function fetch() {
     return new Pageres({ delay: DELAY_IN_SEC, cookies: [busRouteCookie, mapCenterCookie, zoom], filename: 'bus' })
         .src('http://mybusnow.njtransit.com/bustime/map/displaymap.jsp', ['iPhone 6 Plus'], { crop: true })
         .dest('/tmp/cryptoexnews')
@@ -29,5 +29,5 @@ function getBusStatus() {
 }
 
 module.exports = {
-    getBusStatus: getBusStatus
+    fetch: fetch
 };
