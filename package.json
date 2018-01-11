@@ -14,7 +14,9 @@
     "coinmarketcap": "^0.2.0",
     "htmlparser2": "^3.9.2",
     "node-cron": "^1.2.1",
+    "node-telegram-bot-api": "^0.30.0",
     "request": "^2.83.0",
+    "screenshot-stream": "^4.2.0",
     "xml2js": "^0.4.19"
   }
 }
