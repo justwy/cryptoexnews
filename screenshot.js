@@ -1,7 +1,6 @@
-const fs = require('fs');
-const screenshot = require('screenshot-stream');
+const Pageres = require('pageres');
 
-const DELAY_IN_SEC = 1;
+const DELAY_IN_SEC = 2;
 
 const busRouteCookie = {
     name: 'busroute',
@@ -21,16 +20,14 @@ const zoom = {
     domain: 'mybusnow.njtransit.com'
 }
 
-function fetchMap() {
-    const stream = screenshot('http://mybusnow.njtransit.com/bustime/map/displaymap.jsp', '375x667', 
-        { 
-            crop: true, 
-            delay: DELAY_IN_SEC, 
-            cookies: [busRouteCookie, mapCenterCookie, zoom]
-        }
-    );
-
-    return stream;
+// return a promise of stream
+function getBusStatus() {
+    return new Pageres({ delay: DELAY_IN_SEC, cookies: [busRouteCookie, mapCenterCookie, zoom], filename: 'bus' })
+        .src('http://mybusnow.njtransit.com/bustime/map/displaymap.jsp', ['iPhone 6 Plus'], { crop: true })
+        .dest('/tmp/cryptoexnews')
+        .run();
 }
 
-module.exports = fetchMap;
+module.exports = {
+    getBusStatus: getBusStatus
+};

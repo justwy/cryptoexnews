@@ -5,6 +5,8 @@ const bf = new BotFather(TOKEN)
 
 const request = require('request');
 
+const busBot = require('./telegrambot')
+
 var cron = require('node-cron');
 
 // number of times to send when new token is released.
@@ -14,6 +16,8 @@ const TICKERS = ['enigma-project', 'bounty0x', 'stellar', 'ripple', 'appcoins'];
 
 var newList = '';
 var sendTime = 0;
+
+busBot.runBusBot();
 
 cron.schedule('*/5 * * * *', async function(){
     var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))
