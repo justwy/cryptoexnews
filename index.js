@@ -19,7 +19,7 @@ var sendTime = 0;
 
 telegramBot.runBot();
 
-cron.schedule('*/5 * * * * *', async function(){
+cron.schedule('*/5 * * * *', async function(){
     var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))
     var messages = tickerInfo.map(info => {
 
