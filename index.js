@@ -28,9 +28,15 @@ cron.schedule('*/5 * * * *', async function(){
         var arrow1h = info.percent_change_1h >= 0 ? '💹' : '🔻';
         var arrow24h = info.percent_change_24h >= 0 ? '💹' : '🔻';
 
+        var percent1h = parseFloat(info.percent_change_1h);
+        if (percent1h < 0) percent1h = percent1h * (-1);
+
+        var percent24h = parseFloat(info.percent_change_24h);
+        if (percent24h < 0) percent24h = percent24h * (-1);
+
         var priceUsd = parseFloat(info.price_usd).toFixed(2);
 
-        return `*${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${priceUsd}*\t1h ${arrow1h}${info.percent_change_1h}%\t24h ${arrow24h}${info.percent_change_24h}`;
+        return `${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${priceUsd}1h${arrow1h}${percent1h}%\t24h${arrow24h}${percent24h}%`;
     })
 
     sendMessage(messages.join('\n'));
