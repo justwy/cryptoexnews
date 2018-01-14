@@ -12,20 +12,20 @@ var cron = require('node-cron');
 // number of times to send when new token is released.
 const TOTAL_SENT_TIME = 6;
 
-const TICKERS = ['enigma-project', 'bounty0x', 'stellar', 'ripple', 'appcoins'];
+const TICKERS = ['enigma-project', 'simple-token', 'ripple', 'stellar', 'quantstamp', 'bounty0x'];
 
 var newList = '';
 var sendTime = 0;
 
 telegramBot.runBot();
 
-cron.schedule('*/5 * * * *', async function(){
+cron.schedule('*/5 * * * * *', async function(){
     var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))
     var messages = tickerInfo.map(info => {
 
         info = JSON.parse(info)[0];
 
-        return `*${info.symbol}\t\$${info.price_usd}*\t1h ${info.percent_change_1h}%\tmkt-cap ${info.market_cap_usd}`;
+        return `*${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${info.price_usd}*\t1h ${info.percent_change_1h}%\t24h ${info.percent_change_24h}`;
     })
 
     sendMessage(messages.join('\n'));
