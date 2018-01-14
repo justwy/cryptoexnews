@@ -36,7 +36,7 @@ cron.schedule('*/5 * * * *', async function(){
 
         var priceUsd = parseFloat(info.price_usd).toFixed(2);
 
-        return `${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${priceUsd}1h${arrow1h}${percent1h}%\t24h${arrow24h}${percent24h}%`;
+        return `${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${priceUsd}\t${arrow1h}${percent1h}%\t${arrow24h}${percent24h}%`;
     })
 
     sendMessage(messages.join('\n'));
