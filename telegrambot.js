@@ -41,6 +41,31 @@ function runBot() {
       });
     }
   })
+
+
+  bot.onText(/\/bus/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    await njtBusFetcher.fetch();
+
+    bot.sendPhoto(chatId, '/tmp/cryptoexnews/bus.png', {
+      caption: "I'm a bot!"
+    }).catch((error) => {
+      console.log(error);  // => 'ETELEGRAM'
+    });
+  });
+
+  bot.onText(/\/ferry/, async (msg, match) => {
+    const chatId = msg.chat.id;
+    await nywFerryFetcher.fetch();
+
+    // send back the matched "whatever" to the chat
+    bot.sendPhoto(chatId, '/tmp/cryptoexnews/ferry.png', {
+      caption: "I'm a bot!"
+    }).catch((error) => {
+      console.log(error);  // => 'ETELEGRAM'
+    });
+
+  });
 }
 
 module.exports = {
