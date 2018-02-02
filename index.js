@@ -12,7 +12,7 @@ var cron = require('node-cron');
 // number of times to send when new token is released.
 const TOTAL_SENT_TIME = 6;
 
-const TICKERS = ['enigma-project', 'simple-token', 'ripple', 'stellar', 'quantstamp', 'bounty0x', 'bitcoin', 'ethereum'];
+const TICKERS = ['ethereum', 'eos', 'enigma-project', 'simple-token', 'ripple', 'stellar', 'bitcoin'];
 
 var newList = '';
 var sendTime = 0;
