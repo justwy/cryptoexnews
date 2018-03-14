@@ -19,45 +19,45 @@ var sendTime = 0;
 
 telegramBot.runBot();
 
-cron.schedule('*/5 * * * *', async function(){
-    var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))
-    var messages = tickerInfo.map(info => {
+// cron.schedule('*/5 * * * *', async function(){
+//     var tickerInfo = await Promise.all(TICKERS.map(ticker => getTicker(ticker)))
+//     var messages = tickerInfo.map(info => {
 
-        info = JSON.parse(info)[0];
+//         info = JSON.parse(info)[0];
 
-        var arrow1h = info.percent_change_1h >= 0 ? '💹' : '🔻';
-        var arrow24h = info.percent_change_24h >= 0 ? '💹' : '🔻';
+//         var arrow1h = info.percent_change_1h >= 0 ? '💹' : '🔻';
+//         var arrow24h = info.percent_change_24h >= 0 ? '💹' : '🔻';
 
-        var percent1h = parseFloat(info.percent_change_1h);
-        if (percent1h < 0) percent1h = percent1h * (-1);
+//         var percent1h = parseFloat(info.percent_change_1h);
+//         if (percent1h < 0) percent1h = percent1h * (-1);
 
-        var percent24h = parseFloat(info.percent_change_24h);
-        if (percent24h < 0) percent24h = percent24h * (-1);
+//         var percent24h = parseFloat(info.percent_change_24h);
+//         if (percent24h < 0) percent24h = percent24h * (-1);
 
-        var priceUsd = parseFloat(info.price_usd).toFixed(2);
+//         var priceUsd = parseFloat(info.price_usd).toFixed(2);
 
-        return `${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${priceUsd}\t${arrow1h}${percent1h}%\t${arrow24h}${percent24h}%`;
-    })
+//         return `${info.symbol}\t${parseInt(info.price_btc*100000000)}\t$${priceUsd}\t${arrow1h}${percent1h}%\t${arrow24h}${percent24h}%`;
+//     })
 
-    sendMessage(messages.join('\n'));
-});
+//     sendMessage(messages.join('\n'));
+// });
 
-cron.schedule('*/10 * * * * *', async function(){
-    getNewList((err, list) => {
-        if (err) return console.error(err);
-
-        if (list.length > 0 && list[0] != newList) {
-            newList = list[0];
-            sendTime = TOTAL_SENT_TIME;
-        }
-
-        if (sendTime > 0) {
-            sendMessage(newList);
-            sendTime--;
-        }
-    });
-
-});
+//cron.schedule('*/10 * * * * *', async function(){
+    //getNewList((err, list) => {
+        //if (err) return console.error(err);
+//
+        //if (list.length > 0 && list[0] != newList) {
+            //newList = list[0];
+            //sendTime = TOTAL_SENT_TIME;
+        //}
+//
+        //if (sendTime > 0) {
+            //sendMessage(newList);
+            //sendTime--;
+        //}
+    //});
+//
+//});
 
 function getTicker(id) {
     return new Promise((resolve, reject) => {
