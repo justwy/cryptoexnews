@@ -15,7 +15,7 @@ function runBot() {
     }
   );
 
-  cron.schedule('*/15 15 9 * * MON-FRI', async function(){
+  cron.schedule('*/15 15 9 * * *', async function(){
       await nywFerryFetcher.fetch();
 
       // send back the matched "whatever" to the chat
@@ -76,7 +76,7 @@ function runBot() {
     });
   });
 
-  bot.onText(/\/ferrybus/, async (msg, match) => {
+  bot.onText(/\/ferrybus$/, async (msg, match) => {
     const chatId = msg.chat.id;
     await ferryBusFetcher.fetch();
 
@@ -88,7 +88,7 @@ function runBot() {
     });
   });
 
-  bot.onText(/\/ferry/, async (msg, match) => {
+  bot.onText(/\/ferry$/, async (msg, match) => {
     const chatId = msg.chat.id;
     await nywFerryFetcher.fetch();
 
